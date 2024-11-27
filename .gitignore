@@ -5,6 +5,7 @@ dist/
 
 # Logs
 *.log
+.history/
 
 # OS/IDE specific files
 .DS_Store
