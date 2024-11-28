@@ -62,7 +62,7 @@ The project includes Swagger for API documentation. Follow the steps below to ac
 1. Start the application: Run the backend server using one of the following commands:
 
 ```bash
-$ npm run start:dev
+$ npm run start
 ```
 
 2. Access the Swagger UI: Open your browser and navigate to:
