@@ -1,0 +1,22 @@
+version: '3.9'
+
+services:
+  mongodb:
+    image: mongo:4.4
+    container_name: sportsdb-mongo
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: password
+    volumes:
+      - ./backend/mongo-seed:/docker-entrypoint-initdb.d
+    networks:
+      - app-network
+
+volumes:
+  mongo-data:
+
+networks:
+  app-network:
+    driver: bridge
