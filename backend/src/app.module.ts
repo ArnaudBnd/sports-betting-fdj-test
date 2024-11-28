@@ -1,10 +1,16 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { MongooseModule } from '@nestjs/mongoose';
+import { LeaguesModule } from './leagues/leagues.module';
 
 @Module({
-  imports: [],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [
+    MongooseModule.forRoot(
+      'mongodb://admin:password@localhost:27017/sportsdb',
+      {
+        authSource: 'admin',
+      },
+    ),
+    LeaguesModule,
+  ],
 })
 export class AppModule {}
