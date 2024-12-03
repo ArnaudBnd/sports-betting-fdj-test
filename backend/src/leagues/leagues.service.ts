@@ -9,9 +9,13 @@ export class LeaguesService {
     @InjectModel(League.name) private leagueModel: Model<LeagueDocument>,
   ) {}
 
-  async findByName(query: string): Promise<League[]> {
+  async findByName(query: string): Promise<any[]> {
     const regex = new RegExp(query, 'i');
-    const leagues = await this.leagueModel.find({ name: regex }).exec();
+
+    const leagues = await this.leagueModel
+      .find({ name: regex })
+      .populate('teams', 'name thumbnail')
+      .exec();
 
     if (leagues.length === 0) {
       throw new NotFoundException(
@@ -19,7 +23,12 @@ export class LeaguesService {
       );
     }
 
-    return leagues;
+    return leagues.map((league) => ({
+      id: league._id,
+      name: league.name,
+      sport: league.sport,
+      teams: league.teams.length > 0 ? league.teams : [],
+    }));
   }
 
   async autocomplete(query: string): Promise<string[]> {
