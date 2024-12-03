@@ -1,6 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
 import { ApiProperty } from '@nestjs/swagger';
+import { Team } from 'src/teams/schemas/team.schema';
 
 export type LeagueDocument = League & Document;
 
@@ -26,7 +27,7 @@ export class League {
     ],
   })
   @Prop({ type: [Types.ObjectId], ref: 'Team' })
-  teams: Types.ObjectId[]; // Changer dans le futu avec le type Team[]
+  teams: (Types.ObjectId | Team)[];
 }
 
 export const LeagueSchema = SchemaFactory.createForClass(League);

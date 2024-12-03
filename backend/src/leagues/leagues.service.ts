@@ -2,6 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { League, LeagueDocument } from './schemas/league.schema';
+import { TeamDocument } from 'src/teams/schemas/team.schema';
 
 @Injectable()
 export class LeaguesService {
@@ -24,10 +25,15 @@ export class LeaguesService {
     }
 
     return leagues.map((league) => ({
-      id: league._id,
       name: league.name,
       sport: league.sport,
-      teams: league.teams.length > 0 ? league.teams : [],
+      teams: league.teams.map((team) => {
+        const teamDocument = team as TeamDocument;
+        return {
+          id: teamDocument._id.toString(),
+          thumbnail: teamDocument.thumbnail,
+        };
+      }),
     }));
   }
 
