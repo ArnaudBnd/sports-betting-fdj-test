@@ -21,4 +21,14 @@ export class LeaguesService {
 
     return leagues;
   }
+
+  async autocomplete(query: string): Promise<string[]> {
+    const regex = new RegExp(`^${query}`, 'i');
+
+    return this.leagueModel
+      .find({ name: regex }, { name: 1, _id: 0 })
+      .limit(10)
+      .exec()
+      .then((leagues) => leagues.map((league) => league.name));
+  }
 }
