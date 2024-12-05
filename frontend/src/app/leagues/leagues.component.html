@@ -7,23 +7,16 @@
       [formControl]="searchControl"
       [matAutocomplete]="auto"
     />
-    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onOptionSelected($event)">
-      <mat-option *ngFor="let suggestion of filteredSuggestions" [value]="suggestion">
+    <mat-autocomplete
+      #auto="matAutocomplete"
+      (optionSelected)="onOptionSelected($event)"
+    >
+      <mat-option
+        *ngFor="let suggestion of filteredSuggestions"
+        [value]="suggestion"
+      >
         {{ suggestion }}
       </mat-option>
     </mat-autocomplete>
   </mat-form-field>
-  
-  <div class="teams-container" *ngIf="teams.length > 0">
-    <h3>Équipes de {{ selectedLeague?.name }}</h3>
-    <div class="teams-grid">
-      <div class="team-logo" *ngFor="let team of teams">
-        <img
-          [src]="team.thumbnail"
-          [alt]="team.name"
-          class="team-thumbnail"
-        />
-      </div>
-    </div>
-  </div>
 </div>

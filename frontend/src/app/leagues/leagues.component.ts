@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { debounceTime, switchMap } from 'rxjs/operators';
 import { ApiService } from '../services/api.service';
@@ -9,10 +9,9 @@ import { ApiService } from '../services/api.service';
   styleUrls: ['./leagues.component.scss'],
 })
 export class LeaguesComponent implements OnInit {
+  @Output() leagueSelected = new EventEmitter<string>();
   searchControl = new FormControl();
   filteredSuggestions: string[] = [];
-  selectedLeague: any = null;
-  teams: any[] = [];
 
   constructor(private apiService: ApiService) {}
 
@@ -33,15 +32,7 @@ export class LeaguesComponent implements OnInit {
   }
 
   onOptionSelected(event: any): void {
-    const selectedLeagueName = event.option.value;
-
-    this.apiService.getTeamsByLeague(selectedLeagueName).subscribe((response) => {
-      if (response && response.length > 0) {
-        this.selectedLeague = response[0];
-        this.teams = this.selectedLeague.teams || [];
-      } else {
-        this.teams = [];
-      }
-    });
+    const selectedLeague = event.option.value;
+    this.leagueSelected.emit(selectedLeague);
   }
 }

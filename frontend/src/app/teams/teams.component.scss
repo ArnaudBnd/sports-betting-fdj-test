@@ -1,0 +1,30 @@
+.teams-container {
+  margin-top: 20px;
+  text-align: center; 
+}
+
+.teams-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px; 
+  justify-content: center; 
+  padding: 10px;
+}
+
+.team-logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.team-thumbnail {
+  width: 100px; 
+  height: 100px;
+  cursor: pointer; 
+  transition: transform 0.2s ease-in-out;
+  border-radius: 5px; 
+}
+
+.team-thumbnail:hover {
+  transform: scale(1.1); 
+}
