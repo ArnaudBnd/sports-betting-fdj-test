@@ -1,0 +1,17 @@
+<div class="search-container">
+  <mat-form-field appearance="outline">
+    <mat-label>Rechercher une ligue...</mat-label>
+    <input
+      type="text"
+      matInput
+      [formControl]="searchControl"
+      [matAutocomplete]="auto"
+    />
+    <mat-autocomplete #auto="matAutocomplete">
+      <mat-option *ngFor="let suggestion of filteredSuggestions" [value]="suggestion">
+        {{ suggestion }}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+  
+</div>
