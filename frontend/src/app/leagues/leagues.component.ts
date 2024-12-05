@@ -11,6 +11,8 @@ import { ApiService } from '../services/api.service';
 export class LeaguesComponent implements OnInit {
   searchControl = new FormControl();
   filteredSuggestions: string[] = [];
+  selectedLeague: any = null;
+  teams: any[] = [];
 
   constructor(private apiService: ApiService) {}
 
@@ -28,5 +30,18 @@ export class LeaguesComponent implements OnInit {
       .subscribe((suggestions) => {
         this.filteredSuggestions = suggestions || [];
       });
+  }
+
+  onOptionSelected(event: any): void {
+    const selectedLeagueName = event.option.value;
+
+    this.apiService.getTeamsByLeague(selectedLeagueName).subscribe((response) => {
+      if (response && response.length > 0) {
+        this.selectedLeague = response[0];
+        this.teams = this.selectedLeague.teams || [];
+      } else {
+        this.teams = [];
+      }
+    });
   }
 }

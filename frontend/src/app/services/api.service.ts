@@ -16,4 +16,8 @@ export class ApiService {
       params: { query },
     });
   }
+
+  getTeamsByLeague(leagueName: string): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/leagues/search?name=${leagueName}`);
+  }
 }
