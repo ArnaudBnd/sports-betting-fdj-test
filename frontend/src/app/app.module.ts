@@ -3,8 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { LeaguesModule } from './leagues/leagues.module';
-import { PlayersModule } from './players/players.module';
 import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
@@ -14,8 +12,6 @@ import { HttpClientModule } from '@angular/common/http';
     BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
-    LeaguesModule,
-    PlayersModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
