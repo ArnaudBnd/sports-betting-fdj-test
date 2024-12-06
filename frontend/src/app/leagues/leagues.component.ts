@@ -1,7 +1,8 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { debounceTime, switchMap } from 'rxjs/operators';
 import { ApiService } from '../services/api.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-leagues',
@@ -9,11 +10,12 @@ import { ApiService } from '../services/api.service';
   styleUrls: ['./leagues.component.scss'],
 })
 export class LeaguesComponent implements OnInit {
-  @Output() leagueSelected = new EventEmitter<string>();
   searchControl = new FormControl();
   filteredSuggestions: string[] = [];
+  selectedLeague: any = null;
+  teams: any[] = [];
 
-  constructor(private apiService: ApiService) {}
+  constructor(private apiService: ApiService, private router: Router) {}
 
   ngOnInit(): void {
     this.searchControl.valueChanges
@@ -21,6 +23,7 @@ export class LeaguesComponent implements OnInit {
         debounceTime(300),
         switchMap((query) => {
           if (!query.trim()) {
+            this.teams = [];
             return [];
           }
           return this.apiService.getAutocompleteSuggestions(query);
@@ -32,7 +35,19 @@ export class LeaguesComponent implements OnInit {
   }
 
   onOptionSelected(event: any): void {
-    const selectedLeague = event.option.value;
-    this.leagueSelected.emit(selectedLeague);
+    const leagueName = event.option.value;
+
+    this.apiService.getTeamsByLeague(leagueName).subscribe((response) => {
+      if (response && response.length > 0) {
+        this.selectedLeague = response[0];
+        this.teams = this.selectedLeague.teams || [];
+      } else {
+        this.teams = [];
+      }
+    });
+  }
+
+  goToPlayers(teamId: string): void {
+    this.router.navigate(['/players', teamId]);
   }
 }

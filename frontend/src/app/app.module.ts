@@ -4,7 +4,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { LeaguesModule } from './leagues/leagues.module';
-import { TeamsModule } from './teams/teams.module';
 import { PlayersModule } from './players/players.module';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -16,7 +15,6 @@ import { HttpClientModule } from '@angular/common/http';
     AppRoutingModule,
     HttpClientModule,
     LeaguesModule,
-    TeamsModule,
     PlayersModule,
   ],
   providers: [],

@@ -20,4 +20,8 @@ export class ApiService {
   getTeamsByLeague(leagueName: string): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}/leagues/search?name=${leagueName}`);
   }
+
+  getPlayersByTeam(teamId: string): Observable<any[]> {
+    return this.http.get<any>(`${this.baseUrl}/teams/${teamId}/players`);
+  }  
 }

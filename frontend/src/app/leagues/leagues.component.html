@@ -20,3 +20,14 @@
     </mat-autocomplete>
   </mat-form-field>
 </div>
+
+<div class="teams-container" *ngIf="teams.length > 0">
+  <h3>Équipes associées à la ligue {{ selectedLeague?.name }}</h3>
+  <div class="teams-grid">
+    <div class="team-logo" *ngFor="let team of teams">
+      <a (click)="goToPlayers(team.id)">
+        <img [src]="team.thumbnail" [alt]="team.name" class="team-thumbnail" />
+      </a>
+    </div>
+  </div>
+</div>
