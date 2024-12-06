@@ -1,6 +1,7 @@
 import { Controller, Get, Param } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiParam, ApiResponse } from '@nestjs/swagger';
 import { TeamsService } from './teams.service';
+import { GetPlayersByTeamDto } from './dto/get-players-by-team.dto';
 
 @ApiTags('teams')
 @Controller('teams')
@@ -14,7 +15,7 @@ export class TeamsController {
   @ApiParam({
     name: 'id',
     required: true,
-    description: 'ID de l’équipe',
+    description: "ID de l'équipe au format MongoDB.",
     example: '5d2d01fdda07b95bb8f16f0a',
   })
   @ApiResponse({
@@ -45,7 +46,7 @@ export class TeamsController {
   })
   @ApiResponse({
     status: 200,
-    description: 'Équipe sans joueurs associés',
+    description: 'Équipe sans joueurs associés.',
     schema: {
       example: {
         teamName: 'Arsenal',
@@ -70,7 +71,7 @@ export class TeamsController {
     description: 'L’équipe spécifiée est introuvable.',
   })
   @Get(':id/players')
-  async getPlayers(@Param('id') id: string): Promise<any> {
-    return this.teamsService.getPlayersByTeam(id);
+  async getPlayers(@Param() params: GetPlayersByTeamDto): Promise<any> {
+    return this.teamsService.getPlayersByTeam(params.id);
   }
 }

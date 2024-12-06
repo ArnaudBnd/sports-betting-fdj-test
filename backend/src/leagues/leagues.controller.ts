@@ -1,6 +1,8 @@
 import { Controller, Get, Query } from '@nestjs/common';
 import { LeaguesService } from './leagues.service';
-import { ApiTags, ApiQuery, ApiResponse, ApiOperation } from '@nestjs/swagger';
+import { ApiTags, ApiResponse, ApiOperation } from '@nestjs/swagger';
+import { SearchLeagueDto } from './dto/search-league.dto';
+import { AutocompleteLeagueDto } from './dto/autocomplete-league.dto';
 
 @ApiTags('leagues')
 @Controller('leagues')
@@ -11,12 +13,6 @@ export class LeaguesController {
     summary: 'Recherche de ligues par nom avec leurs équipes associées',
     description:
       'Recherche des ligues par nom partiel et retourne les ligues trouvées avec leurs équipes associées.',
-  })
-  @ApiQuery({
-    name: 'name',
-    required: false,
-    description: 'Nom ou partie du nom de la ligue à rechercher.',
-    example: 'Premier',
   })
   @ApiResponse({
     status: 200,
@@ -51,21 +47,33 @@ export class LeaguesController {
     status: 404,
     description: 'Aucune ligue ne correspond au critère de recherche.',
   })
+  @ApiResponse({
+    status: 400,
+    description: 'Les données fournies sont invalides.',
+    schema: {
+      type: 'object',
+      properties: {
+        statusCode: { type: 'number', example: 400 },
+        message: {
+          type: 'array',
+          items: {
+            type: 'string',
+            example: 'Le champ "name" doit être une chaîne de caractères.',
+          },
+        },
+        error: { type: 'string', example: 'Bad Request' },
+      },
+    },
+  })
   @Get('search')
-  async searchLeagues(@Query('name') name: string): Promise<any[]> {
-    return this.leaguesService.findByName(name);
+  async searchLeagues(@Query() query: SearchLeagueDto): Promise<any[]> {
+    return this.leaguesService.findByName(query.name);
   }
 
   @ApiOperation({
     summary: 'Auto-complétion pour les noms de ligues',
     description:
       'Renvoie une liste de suggestions de noms de ligues basées sur l’entrée utilisateur.',
-  })
-  @ApiQuery({
-    name: 'query',
-    required: true,
-    description: 'Texte partiel pour l’auto-complétion.',
-    example: 'Fren',
   })
   @ApiResponse({
     status: 200,
@@ -77,16 +85,29 @@ export class LeaguesController {
     },
   })
   @ApiResponse({
-    status: 200,
+    status: 404,
     description: 'Aucune suggestion trouvée.',
+  })
+  @ApiResponse({
+    status: 400,
+    description: 'Les données fournies sont invalides.',
     schema: {
-      type: 'array',
-      items: {},
-      example: [],
+      type: 'object',
+      properties: {
+        statusCode: { type: 'number', example: 400 },
+        message: {
+          type: 'array',
+          items: {
+            type: 'string',
+            example: 'Le champ "query" est obligatoire.',
+          },
+        },
+        error: { type: 'string', example: 'Bad Request' },
+      },
     },
   })
   @Get('autocomplete')
-  async autocomplete(@Query('query') query: string): Promise<string[]> {
-    return this.leaguesService.autocomplete(query);
+  async autocomplete(@Query() query: AutocompleteLeagueDto): Promise<string[]> {
+    return this.leaguesService.autocomplete(query.query);
   }
 }
