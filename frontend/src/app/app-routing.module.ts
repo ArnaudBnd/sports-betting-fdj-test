@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes, PreloadAllModules } from '@angular/router';
+import { ErrorComponent } from './error/error.component';
 
 const routes: Routes = [
   {
@@ -17,6 +18,7 @@ const routes: Routes = [
     loadChildren: () =>
       import('./players/players.module').then((m) => m.PlayersModule),
   },
+  { path: 'error', component: ErrorComponent },
   {
     path: '**',
     redirectTo: 'leagues',

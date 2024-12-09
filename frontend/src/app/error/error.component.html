@@ -1,0 +1,5 @@
+<div class="error-container">
+  <h2>Oups ! Une erreur est survenue.</h2>
+  <p *ngIf="errorMessage">{{ errorMessage }}</p>
+  <button mat-raised-button color="primary" (click)="goBack()">Retour</button>
+</div>
