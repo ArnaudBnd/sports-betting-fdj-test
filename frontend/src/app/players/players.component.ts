@@ -9,6 +9,7 @@ import { ApiService } from '../services/api.service';
 })
 export class PlayersComponent implements OnInit {
   players: any[] = [];
+  hasNoPlayers: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -26,6 +27,7 @@ export class PlayersComponent implements OnInit {
   loadPlayers(teamId: string): void {
     this.apiService.getPlayersByTeam(teamId).subscribe((response: any) => {
       this.players = response.players || [];
+      this.hasNoPlayers = this.players.length === 0;
     });
   }
 

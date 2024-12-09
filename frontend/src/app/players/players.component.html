@@ -1,15 +1,22 @@
-<div class="players-container" *ngIf="players.length > 0">
+<div class="players-container">
   <button mat-button (click)="goBack()">Retour</button>
   <h3>Joueurs de l’équipe</h3>
-  <div class="player-card" *ngFor="let player of players">
-    <div class="player-thumbnail">
-      <img [src]="player.thumbnail" [alt]="player.name" />
-    </div>
-    <div class="player-info">
-      <h4>{{ player.name }}</h4>
-      <p>Position : {{ player.position }}</p>
-      <p>Date de naissance : {{ player.birthDate | date: 'dd/MM/yyyy' }}</p>
-      <p>Montant du transfert : {{ player.transferFee | currency: player.currency }}</p>
+
+  <p *ngIf="hasNoPlayers" class="no-players-message">
+    Aucun joueur n’est actuellement enregistré pour cette équipe.
+  </p>
+
+  <div *ngIf="!hasNoPlayers">
+    <div class="player-card" *ngFor="let player of players">
+      <div class="player-thumbnail">
+        <img [src]="player.thumbnail" [alt]="player.name" />
+      </div>
+      <div class="player-info">
+        <h4>{{ player.name }}</h4>
+        <p>Position : {{ player.position }}</p>
+        <p>Date de naissance : {{ player.birthDate | date: 'dd/MM/yyyy' }}</p>
+        <p>Montant du transfert : {{ player.transferFee | currency: player.currency }}</p>
+      </div>
     </div>
   </div>
 </div>
