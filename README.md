@@ -19,6 +19,8 @@ cd project-root
 
 The application uses a MongoDB database. You can spin up a MongoDB instance using Docker.
 
+You must have Docker installed on your machine.
+
 Start MongoDB with Docker
 
 ```bash
