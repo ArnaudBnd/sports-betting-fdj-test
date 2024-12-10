@@ -33,26 +33,26 @@ $ npm install
 
 ```bash
 # development
-$ npm run start
+npm run start
 
 # watch mode
-$ npm run start:dev
+npm run start:dev
 
 # production mode
-$ npm run start:prod
+npm run start:prod
 ```
 
 ## Run tests
 
 ```bash
 # unit tests
-$ npm run test
+npm run test
 
 # e2e tests
-$ npm run test:e2e
+npm run test:e2e
 
 # test coverage
-$ npm run test:cov
+npm run test:cov
 ```
 
 ## API Documentation with Swagger
@@ -62,7 +62,7 @@ The project includes Swagger for API documentation. Follow the steps below to ac
 1. Start the application: Run the backend server using one of the following commands:
 
 ```bash
-$ npm run start
+npm run start
 ```
 
 2. Access the Swagger UI: Open your browser and navigate to:
